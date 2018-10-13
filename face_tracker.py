@@ -22,6 +22,10 @@ face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
 cap = cv2.VideoCapture(0)
+width=480 #adjust these to change dimentions; larger width & height gives better resolution, but slower processing speed
+height=360 
+cap.set(3,width)
+cap.set(4,height)
 
 # Defining and initializing globals
 global panServoAngle
@@ -38,25 +42,25 @@ os.system("python3 angleServoCtrl.py " + str(tiltPin) + " " + str(tiltServoAngle
 def servoPosition (x, y):
     global panServoAngle
     global tiltServoAngle
-    if (x < 250):
+    if (x < width*.45):
         panServoAngle += 10
         if panServoAngle > 140:
             panServoAngle = 140
         os.system("python angleServoCtrl.py " + str(panPin) + " " + str(panServoAngle))
   
-    if (x > 300):
+    if (x > width*.55):
         panServoAngle -= 10
         if panServoAngle < 40:
             panServoAngle = 40
         os.system("python angleServoCtrl.py " + str(panPin) + " " + str(panServoAngle))
 
-    if (y < 160):
+    if (y < height*.45):
         tiltServoAngle += 10
         if tiltServoAngle > 140:
             tiltServoAngle = 140
         os.system("python angleServoCtrl.py " + str(tiltPin) + " " + str(tiltServoAngle))
   
-    if (y > 210):
+    if (y > height*.55):
         tiltServoAngle -= 10
         if tiltServoAngle < 40:
             tiltServoAngle = 40
